@@ -1,0 +1,19 @@
+
+
+
+@router.post(
+    "/{doctor_id}/patients/{patient_id}",
+    response_model=AssignmentResponse,
+    status_code=status.HTTP_201_CREATED
+)
+def assign_patient(
+    doctor_id: int,
+    patient_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
+):
+    return assign_patient_service(
+        db=db,
+        doctor_id=doctor_id,
+        patient_id=patient_id
+    )
